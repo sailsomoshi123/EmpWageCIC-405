@@ -1,21 +1,23 @@
 #! /bin/bash/ -x
-echo "welcome to employee wage computation"
-isPartTime=1
 isFullTime=2
 totalSalary=0
 empRateperHr=20
 numWorkingDays=20
-for (( day=1;day<=$numWorkingDays;day++ ))
+maxHoursInMonth=100
+totalEmpHr=0
+totalWorkingDays=0
+while [[ $totalEmpHr -le $maxHoursInMonth && $totalWorkingDays -le $numWorkingDays ]]
 do
+((totalWorkingDays++))
 randomCheck=$((RANDOM%3))
  case $randomCheck in
-	 $isFullTime) empHrs=8 ;;
-	 $isPartTime) empHrs=4 ;;
-	 *) empHrs=0 ;;
+         $isFullTime) empHrs=8 ;;
+         $isPartTime) empHrs=4 ;;
+         *) empHrs=0 ;;
  esac
- salary=$(($empHrs*$empRateperHr))
- totalSalary=$(($totalSalary+$salary))
+ totalEmpHr=$(($totalEmpHr+$empHrs))
 done
 
-echo "total salary for month is $totalSalary"
+totalSalary=$(($totalEmpHr*$empRateperHr))
+echo "total salary is $totalSalary"
 
